@@ -36,3 +36,45 @@ df = pd.read_json("TelecomX_Data.json")
 
 df.head()
 
+## 3. Transformação (Transform)
+Após a extração, identificou-se que quatro colunas (`customer`, `phone`, `internet`, `account`) continham estruturas aninhadas (dicionários armazenados como texto).
+
+**Principais etapas realizadas**
+1. Expansão das colunas aninhadas usando `pd.json_normalize` e `map(parse_obj)` para lidar com células contendo tanto strings quanto dicionários.
+2. Adição de prefixos (`customer_`, `phone_`, `internet_`, `account_`) para evitar conflitos de nomes.
+3. Conversão de tipos:
+   - `Churn` transformado para valores binários (Yes → 1, No → 0).
+   - `account_Charges.Total` convertido para `float`.
+4. Limpeza de espaços extras em colunas de texto.
+5. Verificação de nulos e padronização de tipos.
+
+**Código simplificado**
+```python
+import pandas as pd
+import ast
+import json
+
+def parse_obj(x):
+    if pd.isna(x):
+        return {}
+    if isinstance(x, dict):
+        return x
+    if isinstance(x, str):
+        try:
+            return ast.literal_eval(x)
+        except Exception:
+            try:
+                return json.loads(x)
+            except Exception:
+                return {}
+    return {}
+
+customer_df = pd.json_normalize(df['customer'].map(parse_obj)).add_prefix('customer_')
+phone_df    = pd.json_normalize(df['phone'].map(parse_obj)).add_prefix('phone_')
+internet_df = pd.json_normalize(df['internet'].map(parse_obj)).add_prefix('internet_')
+account_df  = pd.json_normalize(df['account'].map(parse_obj)).add_prefix('account_')
+
+df_expanded = pd.concat(
+    [df[['customerID','Churn']], customer_df, phone_df, internet_df, account_df],
+    axis=1
+)
