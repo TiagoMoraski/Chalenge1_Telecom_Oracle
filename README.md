@@ -120,3 +120,34 @@ sns.boxplot(data=df_expanded, x='Churn', y='account_Charges.Monthly')
 plt.title("Mensalidade por Churn")
 plt.show()
 
+## 5. Conclusão e Recomendações
+A análise exploratória revelou padrões claros que podem orientar ações para reduzir o churn:
+
+**Principais achados**
+- Contratos mensais têm churn muito mais alto que contratos anuais ou de dois anos.
+- Clientes novos (pouco tempo de permanência) são mais propensos a sair.
+- Planos com mensalidades mais caras apresentam maior taxa de evasão.
+- Ausência de serviços como segurança online e suporte técnico está associada a churn elevado.
+- Fibra óptica apresenta churn maior que DSL.
+
+**Recomendações**
+1. **Incentivar contratos de longo prazo**  
+   - Oferecer descontos ou benefícios para clientes que migrem de contrato mensal para anual ou bienal.
+
+2. **Apoio e engajamento nos primeiros meses**  
+   - Programas de onboarding e acompanhamento para novos clientes.
+   - Contato proativo com clientes de baixo tenure.
+
+3. **Revisão de planos e preços**  
+   - Avaliar o valor percebido dos planos mais caros.
+   - Criar pacotes com benefícios adicionais para justificar o custo.
+
+4. **Inclusão de serviços de valor agregado**  
+   - Oferecer segurança online e suporte técnico como parte de pacotes básicos.
+   - Comunicar claramente o valor desses serviços para retenção.
+
+> Com base nessas ações, espera-se reduzir o churn, aumentar a fidelização e melhorar a experiência geral do cliente.
+
+---
+**Autor:** Tiago Moraski  
+**Projeto:** Desafio Telecom X — Análise de Evasão de Clientes
