@@ -78,3 +78,45 @@ df_expanded = pd.concat(
     [df[['customerID','Churn']], customer_df, phone_df, internet_df, account_df],
     axis=1
 )
+[200~
+## 4. Análise Exploratória (EDA)
+Com o dataset limpo e padronizado, foi realizada a Análise Exploratória para identificar padrões associados ao churn.
+
+**Principais análises e gráficos gerados**
+1. **Distribuição geral do churn**  
+   - Aproximadamente X% dos clientes saíram (Churn = 1).
+   - Gráfico: `countplot` mostrando o equilíbrio entre clientes retidos e evadidos.
+
+2. **Churn por gênero**  
+   - Pequena variação entre masculino e feminino, sem impacto significativo.
+
+3. **Churn por tipo de contrato**  
+   - Contratos mensais apresentaram taxa de churn significativamente maior.
+   - Contratos anuais ou de dois anos retêm mais clientes.
+
+4. **Impacto de variáveis numéricas**  
+   - **Tempo de permanência (tenure)**: clientes novos saem mais.
+   - **Mensalidade**: planos mais caros têm maior churn.
+   - **Total gasto**: clientes com gasto total baixo também têm alta evasão (pouco tempo de permanência).
+
+5. **Serviços contratados**
+   - Fibra óptica tem maior churn que DSL.
+   - Clientes sem segurança online (`OnlineSecurity = No`) e sem suporte técnico (`TechSupport = No`) têm churn mais elevado.
+
+**Exemplo de código para gráficos**
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Churn por tipo de contrato
+plt.figure(figsize=(7,4))
+sns.countplot(data=df_expanded, x='account_Contract', hue='Churn')
+plt.title("Churn por Tipo de Contrato")
+plt.show()
+
+# Boxplot: mensalidade vs churn
+plt.figure(figsize=(6,4))
+sns.boxplot(data=df_expanded, x='Churn', y='account_Charges.Monthly')
+plt.title("Mensalidade por Churn")
+plt.show()
+
